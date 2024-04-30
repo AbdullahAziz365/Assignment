@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbenrollementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbcourse">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="cname" Type="nvarchar(max)" />
+          <Property Name="fee" Type="nvarchar(max)" />
+          <Property Name="credits" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblregisteration">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="regdate" Type="date" />
+          <Property Name="student_id" Type="int" />
+          <Property Name="course_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbstudent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="sname" Type="nvarchar(max)" />
+          <Property Name="adress" Type="nvarchar(max)" />
+          <Property Name="phone" Type="nvarchar(max)" />
+          <Property Name="gender" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK__tblregist__cours__3C69FB99">
+          <End Role="tbcourse" Type="Self.tbcourse" Multiplicity="0..1" />
+          <End Role="tblregisteration" Type="Self.tblregisteration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbcourse">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblregisteration">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblregist__stude__3B75D760">
+          <End Role="tbstudent" Type="Self.tbstudent" Multiplicity="0..1" />
+          <End Role="tblregisteration" Type="Self.tblregisteration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbstudent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblregisteration">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbenrollementModelStoreContainer">
+          <EntitySet Name="tbcourse" EntityType="Self.tbcourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblregisteration" EntityType="Self.tblregisteration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbstudent" EntityType="Self.tbstudent" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblregist__cours__3C69FB99" Association="Self.FK__tblregist__cours__3C69FB99">
+            <End Role="tbcourse" EntitySet="tbcourse" />
+            <End Role="tblregisteration" EntitySet="tblregisteration" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblregist__stude__3B75D760" Association="Self.FK__tblregist__stude__3B75D760">
+            <End Role="tbstudent" EntitySet="tbstudent" />
+            <End Role="tblregisteration" EntitySet="tblregisteration" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbenrollementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbcourse">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="cname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fee" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="credits" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblregisterations" Relationship="Self.FK__tblregist__cours__3C69FB99" FromRole="tbcourse" ToRole="tblregisteration" />
+        </EntityType>
+        <EntityType Name="tblregisteration">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="regdate" Type="DateTime" Precision="0" />
+          <Property Name="student_id" Type="Int32" />
+          <Property Name="course_id" Type="Int32" />
+          <NavigationProperty Name="tbcourse" Relationship="Self.FK__tblregist__cours__3C69FB99" FromRole="tblregisteration" ToRole="tbcourse" />
+          <NavigationProperty Name="tbstudent" Relationship="Self.FK__tblregist__stude__3B75D760" FromRole="tblregisteration" ToRole="tbstudent" />
+        </EntityType>
+        <EntityType Name="tbstudent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="sname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblregisterations" Relationship="Self.FK__tblregist__stude__3B75D760" FromRole="tbstudent" ToRole="tblregisteration" />
+        </EntityType>
+        <Association Name="FK__tblregist__cours__3C69FB99">
+          <End Role="tbcourse" Type="Self.tbcourse" Multiplicity="0..1" />
+          <End Role="tblregisteration" Type="Self.tblregisteration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbcourse">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblregisteration">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblregist__stude__3B75D760">
+          <End Role="tbstudent" Type="Self.tbstudent" Multiplicity="0..1" />
+          <End Role="tblregisteration" Type="Self.tblregisteration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbstudent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tblregisteration">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbenrollementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbcourses" EntityType="Self.tbcourse" />
+          <EntitySet Name="tblregisterations" EntityType="Self.tblregisteration" />
+          <EntitySet Name="tbstudents" EntityType="Self.tbstudent" />
+          <AssociationSet Name="FK__tblregist__cours__3C69FB99" Association="Self.FK__tblregist__cours__3C69FB99">
+            <End Role="tbcourse" EntitySet="tbcourses" />
+            <End Role="tblregisteration" EntitySet="tblregisterations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblregist__stude__3B75D760" Association="Self.FK__tblregist__stude__3B75D760">
+            <End Role="tbstudent" EntitySet="tbstudents" />
+            <End Role="tblregisteration" EntitySet="tblregisterations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbenrollementModelStoreContainer" CdmEntityContainer="dbenrollementEntities">
+          <EntitySetMapping Name="tbcourses">
+            <EntityTypeMapping TypeName="dbenrollementModel.tbcourse">
+              <MappingFragment StoreEntitySet="tbcourse">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cname" ColumnName="cname" />
+                <ScalarProperty Name="fee" ColumnName="fee" />
+                <ScalarProperty Name="credits" ColumnName="credits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblregisterations">
+            <EntityTypeMapping TypeName="dbenrollementModel.tblregisteration">
+              <MappingFragment StoreEntitySet="tblregisteration">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="regdate" ColumnName="regdate" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbstudents">
+            <EntityTypeMapping TypeName="dbenrollementModel.tbstudent">
+              <MappingFragment StoreEntitySet="tbstudent">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sname" ColumnName="sname" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
